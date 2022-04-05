@@ -21,5 +21,5 @@ const imageContainerEl = document.querySelector('.gallery');
 imageContainerEl.insertAdjacentHTML('afterbegin', imageContainerList(images));
 
 function imageContainerList(listImg) {
-  return listImg.map((elem) => `<li><img src ='${elem.url} alt = '${elem.alt}'</li>`).join(''); 
+  return listImg.map((elem) => `<li><img src ='${elem.url}' alt = '${elem.alt}'</li>`).join(''); 
 }

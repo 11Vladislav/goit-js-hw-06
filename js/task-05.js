@@ -9,8 +9,6 @@ function textInput(event) {
     if (outputEl.textContent === '') {
         outputEl.textContent = 'Anonymous';
     }
-    else {
-        event;
-    }
+    
 }
 

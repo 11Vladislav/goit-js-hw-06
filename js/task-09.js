@@ -1,9 +1,11 @@
 const changeColor = document.querySelector('.change-color');
+const changeColorHex = document.querySelector('.color');
 changeColor.addEventListener('click', newColor);
 
 function newColor() {
   const spanColor = getRandomHexColor();
   document.body.style.backgroundColor = spanColor;
+  changeColorHex.textContent = spanColor;
 }
 
 
