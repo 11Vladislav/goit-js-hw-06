@@ -13,10 +13,12 @@ function handleSubmit(event) {
   }
 
   const inputData = {
-    email: email.value,
+    email: email.value, 
     password: password.value,
   };
 
-   console.log(inputData);
+  if (inputData.email !== "" && inputData.password !== "") {
+    console.log(inputData);
+  }
   event.currentTarget.reset();
 }
