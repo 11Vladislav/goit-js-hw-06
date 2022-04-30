@@ -1,39 +1,50 @@
-const createBtn = document.querySelector('[data-create]');
-const destroyBtn = document.querySelector('[data-destroy]');
+const refs = {
+  inputValue: document.querySelector("input"), // поле ввода
+  createBtn: document.querySelector("[data-create]"), // кнопка создать
+  destroyBtn: document.querySelector("[data-destroy]"), // кнопка уничтожить
+  divBox: document.querySelector("#boxes"), // блок для контейнера
+};
 
-createBtn.addEventListener('click', () => {
-  const amount = document.querySelector('input').value;
-  createBoxes(amount);
-  
+refs.createBtn.addEventListener("click", (event) => { // кнопка создать
+  createBox(event); // вызов функции создания контейнера
 });
 
-destroyBtn.addEventListener('click', () => {
-  destroyBoxes();
-});
+let firstDivWidth = 30; // переменная для ширины первого контейнера
+let firstDivHeight = 30; // переменная для высоты первого контейнера
+function createBox(amount) { // функция создания контейнера
+  amount = refs.inputValue.value; // переменная для количества контейнеров
 
-const createBoxes = (amount) => {
-  let size = 30;
-  for (let i = 0; i <= amount; i+=1) {
-    const box = document.createElement('div');
-    box.style.width = `${size}px`;
-    box.style.height = `${size}px`;
-    box.style.backgroundColor = getRandomHexColor();
-    document.querySelector('#boxes').appendChild(box);
-    size += 10;
+  for (let i = 0; i <= amount; i+=1) {   // цикл для создания контейнеров
+    const newDiv = document.createElement("div"); // создание нового контейнера
+    if (firstDivWidth > newDiv.style.width) { // если ширина первого контейнера больше ширины нового контейнера
+      firstDivWidth += 10;  // увеличиваем ширину первого контейнера на 10
+      firstDivHeight += 10; // увеличиваем высоту первого контейнера на 10
+    } else { // если ширина первого контейнера меньше ширины нового контейнера
+      firstDivWidth = 30; // устанавливаем ширину первого контейнера на 30
+      firstDivHeight = 30; // устанавливаем высоту первого контейнера на 30
+      const firstDiv = document.createElement("div"); // создание нового контейнера
+      firstDiv.style.width = `${firstDivWidth}px`; // установка ширины первого контейнера
+      firstDiv.style.height = `${firstDivHeight}px`; // установка высоты первого контейнера
+      firstDiv.style.backgroundColor = getRandomHexColor(); // установка цвета первого контейнера
+      refs.divBox.append(firstDiv); // добавление первого контейнера в блок
+    }
+    newDiv.style.width = `${firstDivWidth - 10}px`; // установка ширины нового контейнера
+    newDiv.style.height = `${firstDivHeight - 10}px`; // установка высоты нового контейнера
+    newDiv.style.backgroundColor = getRandomHexColor(); // установка цвета нового контейнера
+    refs.divBox.append(newDiv); // добавление нового контейнера в блок
+
   }
-  
-} 
-
-const destroyBoxes = () => {  
-  const boxes = document.querySelector('#boxes');
-  boxes.innerHTML = '';
 }
 
-const getRandomHexColor = () => {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i+=1) {
-    color += letters[Math.floor(Math.random() * 16)];
+refs.destroyBtn.addEventListener("click", () => { // кнопка уничтожить
+  for (let i = 0; i < refs.divBox.children.length; i+=1) { // цикл для уничтожения контейнеров
+    refs.divBox.children[i].remove(); // удаление контейнера
+    [i] = [i - 1]; // уменьшение индекса на 1
   }
-  return color;
+  firstDivHeight = 30; // установка высоты первого контейнера на 30
+  firstDivWidth = 30; // установка ширины первого контейнера на 30
+});
+
+function getRandomHexColor() { // функция генерации цвета
+  return `#${Math.floor(Math.random() * 16777215).toString(16)}`; // возвращает случайный цвет
 }
